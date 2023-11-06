@@ -13,9 +13,9 @@ Time spent: **2** hours spent in total
 
 ## Summary
 
-This document provides an overview, project spec, and wireframes for our team's capstone project: An app that **short description of your app**
+This document provides an overview, project spec, and wireframes for our team's capstone project: An app that **FeastFinder is a culinary discovery app that simplifies meal planning, empowers grocery shopping, and inspires cooking with an extensive library of recipes tailored to users' tastes and dietary preferences.**
 
-If we had to describe this milestone in three (3) emojis, they would be: **emojis here**
+If we had to describe this milestone in three (3) emojis, they would be: **🔥🔥🔥**
 
 ## Milestone Requirements
 
