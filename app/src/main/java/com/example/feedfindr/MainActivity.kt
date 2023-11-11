@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.RequestHeaders
@@ -15,6 +16,8 @@ import java.util.Random
 
 class MainActivity : AppCompatActivity() {
 
+    private var recipeURL = mutableListOf<String>()
+    private var recipeName = mutableListOf<String>()
     private var query = ""
     private lateinit var recyclerView : RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +58,22 @@ class MainActivity : AppCompatActivity() {
                 override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
                     val jsonObject = json.jsonObject
                     val resultsArray = jsonObject.getJSONArray("results")
+
+                    //loop through the array
+                    for (i in 0 until resultsArray.length()) {
+                        val url = resultsArray.getJSONObject(i).getString("image")
+                        val name = resultsArray.getJSONObject(i).getString("title")
+                        recipeURL.add(url)
+                        recipeName.add(name)
+                    }
+
+                    val adapter = RecipesAdapter(recipeURL, recipeName)
+                    recyclerView.adapter = adapter
+                    recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+
                     Log.d("PRINTING RESULT ARRAY", resultsArray.toString())
+                    Log.d("PRINTING RESULT ARRAY", recipeURL.toString())
+                    Log.d("Printing name array", recipeName.toString())
 
                 }
 
