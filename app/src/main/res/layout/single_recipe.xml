@@ -7,15 +7,30 @@
     <ImageView
         android:id="@+id/recipeImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height= "200dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
+
+
+    <!-- Recipe name now bolded. -->
+
     <TextView
         android:id="@+id/recipeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/recipeImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <!-- Next textview that will store ingredients. It awill always be under the name -->
+    <TextView
+        android:id="@+id/RecipeIngredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/recipeName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />

@@ -8,12 +8,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class RecipesAdapter (private val imageList: List<String>, private val nameList: List<String>): RecyclerView.Adapter<RecipesAdapter.ViewHolder>() {
+
+/*Updated the class constructor to accept ingredientList as a Map. */
+class RecipesAdapter (private val imageList: List<String>, private val nameList: List<String>,
+                      private val ingredientList: Map<String, String>): RecyclerView.Adapter<RecipesAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val image = itemView.findViewById<ImageView>(R.id.recipeImage)
         val name = itemView.findViewById<TextView>(R.id.recipeName)
+        /*Added new textview to store ingredients text for each entry. */
+        val ingredients = itemView.findViewById<TextView>(R.id.RecipeIngredients)
 
     }
 
@@ -31,9 +36,10 @@ class RecipesAdapter (private val imageList: List<String>, private val nameList:
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        val recipeName = nameList.getOrNull(position) ?: "Name not available"
         holder.name.text = nameList[position]
-
+        /*Set the ingredient text in the holder to whatever is in the list. */
+        holder.ingredients.text = ingredientList[recipeName] ?: "Ingredients not available"
         Glide.with(holder.itemView)
             .load(imageList[position])
             .centerCrop()
