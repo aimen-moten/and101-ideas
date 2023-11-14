@@ -17,14 +17,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
          />
-    
+
     <Button
         android:id="@+id/serachBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="290dp"
+        app:layout_constraintLeft_toRightOf="@id/query"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/query"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="13sp"
         android:text="Search" />
 
     <androidx.recyclerview.widget.RecyclerView

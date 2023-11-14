@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     private var recipeIngredients = hashMapOf<String, String>()
     private var query = ""
     private lateinit var recyclerView : RecyclerView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,8 +34,14 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.results)
 
         var input = findViewById<EditText>(R.id.query)
-
+        /* When you focus for the first time, remove the text. */
+        input.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                input.text.clear()
+            }
+        }
         var button = findViewById<Button>(R.id.serachBtn)
+
 
         button.setOnClickListener {
             query = input.text.toString()
@@ -93,6 +101,7 @@ class MainActivity : AppCompatActivity() {
                                 }
                                 /* Next we add the list to a hashmap with a key value set the same as the recipe name. */
                                 recipeIngredients[name] = ingredientsList.joinToString(", ")
+
                             }
 
                             override fun onFailure(
