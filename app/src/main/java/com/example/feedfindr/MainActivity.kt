@@ -12,7 +12,8 @@ import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.RequestHeaders
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
-import java.util.Random
+import org.json.JSONArray
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,8 +25,8 @@ class MainActivity : AppCompatActivity() {
     private var recipeIngredients = hashMapOf<String, String>()
     private var query = ""
     private lateinit var recyclerView : RecyclerView
-
-
+    private lateinit var randomize: RadioButton
+    private lateinit var resultsArray: JSONArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         var maxFat = findViewById<EditText>(R.id.maxfat)
         var maxCalories = findViewById<EditText>(R.id.maxcalories)
         var maxProtein = findViewById<EditText>(R.id.maxprotein)
+        randomize = findViewById(R.id.radioButton)
 
         /* When you focus for the first time, remove the text. */
         input.setOnFocusChangeListener { _, hasFocus ->
@@ -82,56 +84,21 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
                     val jsonObject = json.jsonObject
-                    val resultsArray = jsonObject.getJSONArray("results")
+                    resultsArray = jsonObject.getJSONArray("results")
 
+                    //clears data after a new query
                     recipeURL.clear();
                     recipeName.clear();
                     recipeIngredients.clear();
 
-                    //loop through the array
-                    for (i in 0 until resultsArray.length()) {
-                        val url = resultsArray.getJSONObject(i).getString("image")
-                        val name = resultsArray.getJSONObject(i).getString("title")
-                        /* Recipe ID is needed so that we can run another GET request using the API and get a list of ingredients. */
-                        val recipe_id = resultsArray.getJSONObject(i).getString("id")
-
-                        /* This is the URL that we will use. */
-                        val ingredient_url = "https://api.spoonacular.com/recipes/${recipe_id}/information?apiKey=062d27ad37e442a7bcca3f349b183338"
-                        recipeURL.add(url)
-                        recipeName.add(name)
-
-                        /* Making new header, since I'm going to make a separate HTTP GET request to get the ingredients. */
-                        val new_headers = RequestHeaders()
-                        new_headers["Content-Type"] = "application/json"
-                        client.get(ingredient_url, new_headers, null, object : JsonHttpResponseHandler() {
-                            override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
-
-                                val detailObject = json.jsonObject
-                                /* In this API, the ingredients are listed under the extendedIngredients as an array.*/
-                                val extendedIngredients = detailObject.getJSONArray("extendedIngredients")
-
-                                val ingredientsList = mutableListOf<String>()
-                                /* We parse the JSON array to fill a local variable called ingredientsList. */
-                                for (j in 0 until extendedIngredients.length()) {
-                                    val ingredient = extendedIngredients.getJSONObject(j)
-                                    val ingredientName = ingredient.getString("name")
-                                    ingredientsList.add(ingredientName)
-                                }
-                                /* Next we add the list to a hashmap with a key value set the same as the recipe name. */
-                                recipeIngredients[name] = ingredientsList.joinToString(", ")
-
-                            }
-
-                            override fun onFailure(
-                                statusCode: Int,
-                                headers: Headers?,
-                                errorResponse: String,
-                                throwable: Throwable?
-                            ) {
-                                Log.d("ERROR TEXT", errorResponse)
-                            }
-                        })
-
+                    val randomIndex = Random.nextInt(1, resultsArray.length())
+                    //if the button is checked, than fetched just one data. else, fetches all.
+                    if(!randomize.isChecked) {
+                        for (i in 0 until resultsArray.length()) {
+                            fetchData(i);
+                        }
+                    } else {
+                        fetchData(randomIndex);
                     }
 
                     /* Modified the adapter to take a Hashmap as a variable. */
@@ -156,4 +123,51 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
+    fun fetchData(num: Int) {
+        val client = AsyncHttpClient()
+        val url = resultsArray.getJSONObject(num).getString("image")
+        val name = resultsArray.getJSONObject(num).getString("title")
+        /* Recipe ID is needed so that we can run another GET request using the API and get a list of ingredients. */
+        val recipe_id = resultsArray.getJSONObject(num).getString("id")
+
+        /* This is the URL that we will use. */
+        val ingredient_url = "https://api.spoonacular.com/recipes/${recipe_id}/information?apiKey=062d27ad37e442a7bcca3f349b183338"
+        recipeURL.add(url)
+        recipeName.add(name)
+
+        /* Making new header, since I'm going to make a separate HTTP GET request to get the ingredients. */
+        val new_headers = RequestHeaders()
+        new_headers["Content-Type"] = "application/json"
+
+        client.get(ingredient_url, new_headers, null, object : JsonHttpResponseHandler() {
+            override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
+
+                val detailObject = json.jsonObject
+                /* In this API, the ingredients are listed under the extendedIngredients as an array.*/
+                val extendedIngredients = detailObject.getJSONArray("extendedIngredients")
+
+                val ingredientsList = mutableListOf<String>()
+                /* We parse the JSON array to fill a local variable called ingredientsList. */
+                for (j in 0 until extendedIngredients.length()) {
+                    val ingredient = extendedIngredients.getJSONObject(j)
+                    val ingredientName = ingredient.getString("name")
+                    ingredientsList.add(ingredientName)
+                }
+                /* Next we add the list to a hashmap with a key value set the same as the recipe name. */
+                recipeIngredients[name] = ingredientsList.joinToString(", ")
+
+            }
+
+            override fun onFailure(
+                statusCode: Int,
+                headers: Headers?,
+                errorResponse: String,
+                throwable: Throwable?
+            ) {
+                Log.d("ERROR TEXT", errorResponse)
+            }
+        })
+    }
+
+
     }

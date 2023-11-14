@@ -117,4 +117,12 @@
         app:layout_constraintTop_toBottomOf="@id/serachBtn"
         app:layout_constraintVertical_bias="1.0" />
 
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Randomize"
+        app:layout_constraintTop_toBottomOf="@id/serachBtn"
+        app:layout_constraintRight_toRightOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
