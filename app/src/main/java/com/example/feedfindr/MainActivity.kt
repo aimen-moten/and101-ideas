@@ -84,6 +84,10 @@ class MainActivity : AppCompatActivity() {
                     val jsonObject = json.jsonObject
                     val resultsArray = jsonObject.getJSONArray("results")
 
+                    recipeURL.clear();
+                    recipeName.clear();
+                    recipeIngredients.clear();
+
                     //loop through the array
                     for (i in 0 until resultsArray.length()) {
                         val url = resultsArray.getJSONObject(i).getString("image")
@@ -101,6 +105,7 @@ class MainActivity : AppCompatActivity() {
                         new_headers["Content-Type"] = "application/json"
                         client.get(ingredient_url, new_headers, null, object : JsonHttpResponseHandler() {
                             override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
+
                                 val detailObject = json.jsonObject
                                 /* In this API, the ingredients are listed under the extendedIngredients as an array.*/
                                 val extendedIngredients = detailObject.getJSONArray("extendedIngredients")
