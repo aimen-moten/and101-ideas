@@ -22,20 +22,99 @@
         android:id="@+id/serachBtn"
         android:layout_width="90dp"
         android:layout_height="40dp"
-        android:layout_marginStart="290dp"
+        android:layout_marginStart="300dp"
+        android:text="Search"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toRightOf="@id/query"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="13sp"
-        android:text="Search" />
+        tools:layout_editor_absoluteY="5dp" />
+
+    <EditText
+        android:id="@+id/maxfat_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="-90dp"
+        android:background="@color/white"
+        android:textSize="14sp"
+        android:text="Max Fat"
+        app:layout_constraintStart_toStartOf="@id/query"
+        app:layout_constraintTop_toBottomOf="@id/query" />
+
+    <EditText
+        android:id="@+id/maxfat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="-40dp"
+        android:textSize="12sp"
+        android:ems="3"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@id/query"
+        app:layout_constraintTop_toBottomOf="@id/query" />
+
+
+    <!-- New EditText for Protein -->
+    <EditText
+        android:id="@+id/maxprotein_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@color/white"
+        android:textSize="14sp"
+        android:text="Protein"
+        app:layout_constraintStart_toEndOf="@id/maxfat"
+        app:layout_constraintTop_toTopOf="@id/maxfat_title" />
+
+    <EditText
+        android:id="@+id/maxprotein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:textSize="12sp"
+        android:ems="3"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@id/maxfat"
+        app:layout_constraintTop_toTopOf="@id/maxfat" />
+
+    <!-- New EditText for Calories -->
+    <EditText
+        android:id="@+id/maxcalories_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@color/white"
+        android:textSize="14sp"
+        android:text="Calories"
+        app:layout_constraintStart_toEndOf="@id/maxprotein"
+        app:layout_constraintTop_toTopOf="@id/maxfat_title" />
+
+    <EditText
+        android:id="@+id/maxcalories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:textSize="12sp"
+        android:ems="3"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@id/maxprotein"
+        app:layout_constraintTop_toTopOf="@id/maxfat" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/results"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="350dp"
+        android:background="@drawable/recycleborders"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/serachBtn" />
-        
+        app:layout_constraintTop_toBottomOf="@id/serachBtn"
+        app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

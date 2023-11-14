@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView : RecyclerView
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,6 +35,10 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.results)
 
         var input = findViewById<EditText>(R.id.query)
+        var maxFat = findViewById<EditText>(R.id.maxfat)
+        var maxCalories = findViewById<EditText>(R.id.maxcalories)
+        var maxProtein = findViewById<EditText>(R.id.maxprotein)
+
         /* When you focus for the first time, remove the text. */
         input.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -45,6 +50,15 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             query = input.text.toString()
+            if(maxFat.text != null || !maxFat.text.equals(" ")){
+                query.plus("&maxFat=${maxFat.text}")
+            }
+            if(maxProtein.text != null || !maxProtein.text.equals(" ")){
+                query.plus("&maxProtein=${maxProtein.text}")
+            }
+            if(maxCalories.text != null || !maxCalories.text.equals(" ")){
+                query.plus("&maxCalories=${maxProtein.text}")
+            }
             fetchAPI()
         }
 
@@ -52,9 +66,8 @@ class MainActivity : AppCompatActivity() {
 
         private fun fetchAPI() {
             /* First we set the API url. Note, it requires the apiKey set at the top! */
-            val apiUrl = "https://api.spoonacular.com/recipes/complexSearch?apiKey=062d27ad37e442a7bcca3f349b183338&query=${query}&maxFat=25&number=4"
+            val apiUrl = "https://api.spoonacular.com/recipes/complexSearch?apiKey=062d27ad37e442a7bcca3f349b183338&query=${query}&number=4"
             val client = AsyncHttpClient()
-
             /* for codepath client library, the headers are just are Hashmaps.*/
             val headers = RequestHeaders()
 
