@@ -58,38 +58,42 @@
 
 
     <!-- New EditText for Protein -->
+
+    <!-- New EditText for Calories -->
+
     <EditText
         android:id="@+id/maxprotein_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="45dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="-50dp"
+        android:layout_marginTop="32dp"
         android:background="@color/white"
-        android:textSize="14sp"
         android:text="Protein"
-        app:layout_constraintStart_toEndOf="@id/maxfat"
-        app:layout_constraintTop_toTopOf="@id/maxfat_title" />
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/maxfat"
+        app:layout_constraintTop_toBottomOf="@id/maxfat_title" />
 
     <EditText
         android:id="@+id/maxprotein"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:textSize="12sp"
+        android:layout_marginTop="12dp"
         android:ems="3"
         android:inputType="text"
         android:text=""
-        app:layout_constraintStart_toEndOf="@id/maxfat"
-        app:layout_constraintTop_toTopOf="@id/maxfat" />
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/maxfat"
+        app:layout_constraintTop_toBottomOf="@id/maxfat"
+        tools:layout_editor_absoluteX="61dp" />
 
-    <!-- New EditText for Calories -->
     <EditText
         android:id="@+id/maxcalories_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="4dp"
         android:background="@color/white"
-        android:textSize="14sp"
         android:text="Calories"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/maxprotein"
         app:layout_constraintTop_toTopOf="@id/maxfat_title" />
 
@@ -97,11 +101,11 @@
         android:id="@+id/maxcalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:textSize="12sp"
+        android:layout_marginStart="56dp"
         android:ems="3"
         android:inputType="text"
         android:text=""
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@id/maxprotein"
         app:layout_constraintTop_toTopOf="@id/maxfat" />
 
@@ -121,8 +125,10 @@
         android:id="@+id/radioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="88dp"
         android:text="Randomize"
-        app:layout_constraintTop_toBottomOf="@id/serachBtn"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/serachBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

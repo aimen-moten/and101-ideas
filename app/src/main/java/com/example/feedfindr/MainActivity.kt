@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         var maxFat = findViewById<EditText>(R.id.maxfat)
         var maxCalories = findViewById<EditText>(R.id.maxcalories)
         var maxProtein = findViewById<EditText>(R.id.maxprotein)
+        var RandomButton = findViewById<RadioButton>(R.id.radioButton)
         randomize = findViewById(R.id.radioButton)
 
         /* When you focus for the first time, remove the text. */
@@ -48,6 +49,13 @@ class MainActivity : AppCompatActivity() {
                 input.text.clear()
             }
         }
+
+        RandomButton.setOnClickListener {
+            // Toggle the checked state
+            RandomButton.isChecked = !RandomButton.isChecked
+        }
+
+
         var button = findViewById<Button>(R.id.serachBtn)
 
 
