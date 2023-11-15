@@ -50,10 +50,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        RandomButton.setOnClickListener {
-            // Toggle the checked state
-            RandomButton.isChecked = !RandomButton.isChecked
-        }
+
 
 
         var button = findViewById<Button>(R.id.serachBtn)
