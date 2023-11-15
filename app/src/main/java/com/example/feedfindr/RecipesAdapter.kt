@@ -36,10 +36,10 @@ class RecipesAdapter (private val imageList: List<String>, private val nameList:
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val recipeName = nameList.getOrNull(position) ?: "Name not available"
+        val recipeName = nameList[position]// ?: "Name not available"
         holder.name.text = nameList[position]
         /*Set the ingredient text in the holder to whatever is in the list. */
-        holder.ingredients.text = ingredientList[recipeName] ?: "Ingredients not available"
+        holder.ingredients.text = ingredientList[recipeName] //?: "Ingredients not available"
         Glide.with(holder.itemView)
             .load(imageList[position])
             .centerCrop()

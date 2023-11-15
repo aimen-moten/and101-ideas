@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private var recipeURL = mutableListOf<String>()
     private var recipeName = mutableListOf<String>()
+    private var completedIngredientRequests = 0
     /* I'm adding a hashMap called recipeIngredients.
     *  As you probably guessed, I'm mapping the recipe ingredients to the recipe names!
     * */
@@ -91,14 +92,21 @@ class MainActivity : AppCompatActivity() {
                     recipeName.clear();
                     recipeIngredients.clear();
 
-                    val randomIndex = Random.nextInt(1, resultsArray.length())
-                    //if the button is checked, than fetched just one data. else, fetches all.
-                    if(!randomize.isChecked) {
+                    // Reset the counter before starting the ingredient requests
+                    completedIngredientRequests = 0
+
+                    // Determine the number of fetches we should wait for
+                    val fetchCount = if (!randomize.isChecked) resultsArray.length() else 1
+
+                    // Fetch data for each recipe or just one if 'randomize' is checked
+                    if (!randomize.isChecked) {
                         for (i in 0 until resultsArray.length()) {
-                            fetchData(i);
+                            fetchData(i, fetchCount)
                         }
                     } else {
-                        fetchData(randomIndex);
+                        // Make sure to get a random index that starts from 0
+                        val randomIndex = Random.nextInt(0, resultsArray.length())
+                        fetchData(randomIndex, fetchCount)
                     }
 
                     /* Modified the adapter to take a Hashmap as a variable. */
@@ -123,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
-    fun fetchData(num: Int) {
+    fun fetchData(num: Int, fetchCount: Int) {
         val client = AsyncHttpClient()
         val url = resultsArray.getJSONObject(num).getString("image")
         val name = resultsArray.getJSONObject(num).getString("title")
@@ -145,7 +153,16 @@ class MainActivity : AppCompatActivity() {
                 val detailObject = json.jsonObject
                 /* In this API, the ingredients are listed under the extendedIngredients as an array.*/
                 val extendedIngredients = detailObject.getJSONArray("extendedIngredients")
+                // Increment the completed requests counter
+                completedIngredientRequests++
 
+                // Check if all requests have completed
+                if (completedIngredientRequests == fetchCount) {
+                    // All requests are done, update the RecyclerView
+                    runOnUiThread {
+                        recyclerView.adapter?.notifyDataSetChanged()
+                    }
+                }
                 val ingredientsList = mutableListOf<String>()
                 /* We parse the JSON array to fill a local variable called ingredientsList. */
                 for (j in 0 until extendedIngredients.length()) {
